@@ -1,0 +1,12 @@
+This is a debug log
+This is an info log
+This is critical
+An error occurred
+
+open 115200 is fail!!!!
+This is a debug log
+This is an info log
+This is critical
+An error occurred
+
+open 	/dev/tty.usbserial-202311211107111 is fail!!!!

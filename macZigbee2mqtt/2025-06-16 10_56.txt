@@ -1,0 +1,6 @@
+    This is a debug log
+    This is an info log
+    This is critical
+    An error occurred
+
+    open COM/dev/tty.usbserial-202311211107111 is fail!!!!

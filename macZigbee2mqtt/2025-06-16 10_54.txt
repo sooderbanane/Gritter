@@ -1,0 +1,6 @@
+This is a debug log
+This is an info log
+This is critical
+An error occurred
+
+open COM6969 is fail!!!!

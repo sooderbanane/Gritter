@@ -1,0 +1,35 @@
+services:
+  mqtt:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    restart: unless-stopped
+    ports:
+      - '1883:1883'    # MQTT broker port
+      - '9001:9001'    # WebSocket port (optional)
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+
+  zigbee2mqtt:
+    image: ghcr.io/koenkk/zigbee2mqtt
+    container_name: zigbee2mqtt
+    restart: unless-stopped
+    depends_on:
+      - mqtt
+    devices:
+      - /dev/tty.usbserial-202311211107111:/dev/ttyACM0
+    ports:
+      - '8080:8080'    # Frontend/UI
+    volumes:
+      - ./data:/app/data
+      - /run/udev:/run/udev:ro
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - zigbee_net
+
+networks:
+  zigbee_net:
+    name: zigbee_net
+
