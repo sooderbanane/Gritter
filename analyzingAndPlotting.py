@@ -15,6 +15,7 @@ for file in os.listdir(data_dir):
 
         # Load data
         df = pd.read_csv(filepath, parse_dates=['timestamp'])
+        print("data loaded" + df)
 
         # Find data column
         value_col = [col for col in df.columns if col.lower() != 'timestamp']
@@ -26,6 +27,7 @@ for file in os.listdir(data_dir):
         # Anomaly detection
         model = IsolationForest(contamination=0.02, random_state=42)
         df['anomaly'] = model.fit_predict(df[['value']]) == -1
+        print("anomaly detected" + df)
 
         # Label columns for merging
         df.rename(columns={'value': f'{sensor_name}_value', 'anomaly': f'{sensor_name}_anomaly'}, inplace=True)
@@ -41,7 +43,7 @@ combined_df['timestamp'] = pd.to_datetime(combined_df['timestamp'])
 combined_df.sort_values('timestamp', inplace=True)
 combined_df['hour'] = combined_df['timestamp'].dt.hour
 combined_df['is_night'] = combined_df['hour'].apply(lambda h: 1 if h < 6 or h > 22 else 0)
-
+print (combined_df)
 # 4. Plot
 plt.figure(figsize=(16, 8))
 
